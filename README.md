@@ -11,7 +11,7 @@ Filesyntax:
 
 Type_of_value [Name] {Value}
 
-The value-type is a single lower case character that is the follwing for the specific type: \n
+The value-type is a single lower case character that is the follwing for the specific type: 
 i = integer
 d = double
 s = string

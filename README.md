@@ -12,9 +12,9 @@ Filesyntax:
 Type_of_value [Name] {Value}
 
 The value-type is a single lower case character that is the follwing for the specific type: 
-i = integer
-d = double
-s = string
+i = integer,
+d = double,
+s = string,
 b = bool
 
 String values aren't stored with a " at the beginning and the end

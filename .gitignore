@@ -1,0 +1,6 @@
+#XCode folders
+build/
+HG-List.xcodeproj/
+HG-List-Tests/
+HG-List-Tests.xcodeproj/
+Index/

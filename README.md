@@ -26,5 +26,7 @@ This is a double with the name Pi and the value 3.1415926
 
 You can find more examples in the example branch of this repository.
 
+If you are working on MacOS you can use the HG_List.framework and add it to /Library/Frameworks/ to use it
+
 Licence: 
 If you want to use HG-List in a public project, please email me.

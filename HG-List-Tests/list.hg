@@ -1,4 +1,4 @@
 d [Pi] {3.1415926}
 i [i] {2}
-b [Optics] {true}
+b [AntiAliasing] {true}
 s [StartupScreen] {Good morning}

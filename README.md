@@ -17,7 +17,8 @@ d = double,
 s = string,
 b = bool
 
-String values aren't stored with a " at the beginning and the end
+String values aren't stored with a " at the beginning and the end.
+Bool values can be stored as 0 and 1 or false and true. 
 
 Example:
 d [Pi] {3.1415926}

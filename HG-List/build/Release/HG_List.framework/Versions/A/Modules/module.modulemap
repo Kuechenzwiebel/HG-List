@@ -1,6 +1,0 @@
-framework module HG_List {
-  umbrella header "HG_List.h"
-
-  export *
-  module * { export * }
-}

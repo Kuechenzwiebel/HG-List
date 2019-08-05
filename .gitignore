@@ -1,5 +1,6 @@
 #XCode folders
 build/
+HG-List/HG-List/Info.plist
 HG-List.xcodeproj/
 HG-List-Tests/
 HG-List-Tests.xcodeproj/

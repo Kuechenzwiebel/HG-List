@@ -23,7 +23,7 @@ Example:
 d [Pi] {3.1415926}
 This is a double with the name Pi and the value 3.1415926
 
-You can find examples in the example branch of this repository.
+You can find examples in the examples branch of this repository.
 
 Licence 
 If you want to use HG-List in a public project, please email me.

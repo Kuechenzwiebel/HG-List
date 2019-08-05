@@ -14,12 +14,15 @@
 #include <string>
 #include <vector>
 
+#include "file.hpp"
+
 namespace hg {
     enum ListTypes {
         INT = 1,
         STRING = 2,
         DOUBLE = 3,
         BOOL = 4,
+        COMMENT = 0,
         ERROR = -1
     };
     
@@ -51,9 +54,11 @@ namespace hg {
         std::string line;
     };
     
-    std::vector<HGList> getHGListsFromFileName(std::string fileName);
     
-    int getLocationFromName(std::vector<hg::HGList> search, std::string varName);
+    bool lineValidForHGList(std::string line);
+    
+    std::vector<HGList> getHGListsFromFileName(std::string fileName);
+    int getLocationFromName(std::vector<HGList> *search, std::string varName);
 }
 
 #endif /* HG_List_hpp */

@@ -22,17 +22,20 @@ void hg::HGList::setLine(std::string s) {
 }
 
 hg::ListTypes hg::HGList::getType() {
-    if(line.substr(0, 1) == "i") {
+    if(line[0] == 'i') {
         return hg::INT;
     }
-    else if(line.substr(0, 1) == "s") {
+    else if(line[0] == 's') {
         return hg::STRING;
     }
-    else if(line.substr(0, 1) == "d") {
+    else if(line[0] == 'd') {
         return hg::DOUBLE;
     }
-    else if(line.substr(0, 1) == "b") {
+    else if(line[0] == 'b') {
         return hg::BOOL;
+    }
+    else if(line[0] == '/' && line[1] == '/') {
+        return hg::COMMENT;
     }
     else {
         return hg::ERROR;
@@ -44,9 +47,9 @@ std::string hg::HGList::getVarName() {
     int start, end;
     
     start = (int)line.find("[") + 1;
-    end = (int)line.find("]") - 3;
+    end = (int)line.find("]");
     
-    name = line.substr(start, end);
+    name = hg::substr(line, start, end);
     
     return name;
 }
@@ -57,9 +60,9 @@ int hg::HGList::getIntValue() {
         int start, end;
         
         start = (int)line.find("{") + 1;
-        end = (int)line.find("}") - 3;
+        end = (int)line.find("}");
         
-        value = stoi(line.substr(start, end));
+        value = stoi(hg::substr(line, start, end));
         return value;
     }
     else {
@@ -74,9 +77,9 @@ double hg::HGList::getDoubleValue() {
         int start, end;
         
         start = (int)line.find("{") + 1;
-        end = (int)line.find("}") - 8;
+        end = (int)line.find("}");
         
-        value = stod(line.substr(start, end));
+        value = stod(hg::substr(line, start, end));
         return value;
     }
     else {
@@ -91,9 +94,9 @@ std::string hg::HGList::getStringValue() {
         int start, end;
         
         start = (int)line.find("{") + 1;
-        end = (int)line.find("}") - 10;
+        end = (int)line.find("}");
         
-        value = line.substr(start, end);
+        value = hg::substr(line, start, end);
         return value;
     }
     else {
@@ -107,9 +110,9 @@ bool hg::HGList::getBoolValue() {
         int start, end;
         
         start = (int)line.find("{") + 1;
-        end = (int)line.find("}") - 7;
+        end = (int)line.find("}");
         
-        if(line.substr(start, end) == "true" || line.substr(start, end) == "1") {
+        if(hg::substr(line, start, end) == "true" || hg::substr(line, start, end) == "1") {
             return true;
         }
         else {
@@ -125,19 +128,19 @@ bool hg::HGList::getBoolValue() {
 void hg::HGList::setType(hg::ListTypes type) {
     switch (type) {
         case hg::INT:
-            line = "i" + line.substr(1, line.size() - 1);
+            line = "i" + hg::substr(line, 1, (unsigned int)line.size());
             break;
             
         case hg::DOUBLE:
-            line = "d" + line.substr(1, line.size() - 1);
+            line = "d" + hg::substr(line, 1, (unsigned int)line.size());
             break;
             
         case hg::STRING:
-            line = "s" + line.substr(1, line.size() - 1);
+            line = "s" + hg::substr(line, 1, (unsigned int)line.size());
             break;
             
         case hg::BOOL:
-            line = "b" + line.substr(1, line.size() - 1);
+            line = "b" + hg::substr(line, 1, (unsigned int)line.size());
             break;
             
         default:
@@ -146,26 +149,62 @@ void hg::HGList::setType(hg::ListTypes type) {
 }
 
 void hg::HGList::setVarName(std::string name) {
-    line = line.substr(0, 2) + "[" + name + "]" + line.substr(line.find("{") - 1, line.size() - 1);
+    line = hg::substr(line, 0, 2) + "[" + name + "]" + hg::substr(line, (unsigned int)line.find("{") - 1, (unsigned int)line.size() - 1);
 }
 
 void hg::HGList::setIntValue(int v) {
-    line = line.substr(0, line.find("{") + 1) + std::to_string(v) + "}";
+    line = hg::substr(line, 0, (unsigned int)line.find("{") + 1) + std::to_string(v) + "}";
 }
 
 void hg::HGList::setDoubleValue(double v) {
-    line = line.substr(0, line.find("{") + 1) + std::to_string(v) + "}";
+    line = hg::substr(line, 0, (unsigned int)line.find("{") + 1) + std::to_string(v) + "}";
 }
 
 void hg::HGList::setStringValue(std::string v) {
-    line = line.substr(0, line.find("{") + 1) + v + "}";
+    line = hg::substr(line, 0, (unsigned int)line.find("{") + 1) + v + "}";
 }
 
 void hg::HGList::setBoolValue(bool v) {
-    line = line.substr(0, line.find("{") + 1) + std::to_string(v) + "}";
+    line = hg::substr(line, 0, (unsigned int)line.find("{") + 1) + std::to_string(v) + "}";
 }
 
 
+bool hg::lineValidForHGList(std::string line) {
+    if(line[0] == 'i') {
+        return true;
+    }
+    else if(line[0] == 's') {
+        return true;
+    }
+    else if(line[0] == 'd') {
+        return true;
+    }
+    else if(line[0] == 'b') {
+        return true;
+    }
+    else if(line[0] == '/' && line[1] == '/') {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+/*
+std::vector<hg::HGList> hg::getHGListsFromFile(hg::File file) {
+    std::vector<hg::HGList> lists;
+    std::vector<std::string> strings = file.readFileLineByLine();
+    
+    for(int i = 0; i < strings.size(); i++) {
+        if(strings[i].size() > 0) {
+            if(hg::lineValidForHGList(strings[i])) {
+                lists.push_back(hg::HGList(strings[i]));
+            }
+        }
+    }
+    
+    return lists;
+}*/
 
 std::vector<hg::HGList> hg::getHGListsFromFileName(std::string fileName) {
     std::vector<hg::HGList> lists;
@@ -175,13 +214,11 @@ std::vector<hg::HGList> hg::getHGListsFromFileName(std::string fileName) {
         std::cerr << "Cannot open the file : " << fileName << std::endl;
     }
     
-    
     std::string str;
     while (std::getline(in, str)) {
         if(str.size() > 0) {
-            lists.push_back(hg::HGList(str));
-            if(lists[lists.size() -1].getType() == hg::ERROR) {
-                lists.pop_back();
+            if(hg::lineValidForHGList(str)) {
+                lists.push_back(hg::HGList(str));
             }
         }
     }
@@ -190,11 +227,12 @@ std::vector<hg::HGList> hg::getHGListsFromFileName(std::string fileName) {
     return lists;
 }
 
-int hg::getLocationFromName(std::vector<hg::HGList> search, std::string varName) {
-    for(int i = 0; i < search.size(); i++) {
-        if(search[i].getVarName() == varName) {
+int hg::getLocationFromName(std::vector<hg::HGList> *search, std::string varName) {
+    for(int i = 0; i < search->size(); i++) {
+        if((*search)[i].getVarName() == varName) {
             return i;
         }
     }
     return -1;
 }
+

@@ -23,13 +23,20 @@ namespace hg {
         
         ~File();
         
-        std::vector <std::string> readFileLineByLine();
+        std::vector<std::string> readFileLineByLine();
         std::string readFile();
+        
+        void writeFile(std::string content);
         
     private:
         std::string fileName;
-        std::ifstream file;
+        std::fstream fileStream;
     };
+    
+    std::string substr(std::string string, unsigned int start, unsigned int end);
+    bool find(std::string string, std::string search);
+    
+    std::string transformLinesToString(std::vector<std::string> *lines);
 }
 
 #endif /* File_hpp */

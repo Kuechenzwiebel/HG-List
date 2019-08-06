@@ -19,7 +19,8 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    vector<hg::HGList> lists = hg::getHGListsFromFileName("list.hg");
+    hg::File f("list.hg");
+    vector<hg::HGList> lists = hg::getHGListsFromFile(&f);
     
     for(int i = 0; i < lists.size(); i++) {
         cout << lists[i].getVarName() << " = ";
@@ -50,8 +51,6 @@ int main(int argc, const char * argv[]) {
                 break;
         }
     }
-    
-    hg::File f("list.hg");
     
     cout << endl << endl;
     

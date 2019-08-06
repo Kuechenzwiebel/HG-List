@@ -190,10 +190,10 @@ bool hg::lineValidForHGList(std::string line) {
     }
 }
 
-/*
-std::vector<hg::HGList> hg::getHGListsFromFile(hg::File file) {
+
+std::vector<hg::HGList> hg::getHGListsFromFile(hg::File *file) {
     std::vector<hg::HGList> lists;
-    std::vector<std::string> strings = file.readFileLineByLine();
+    std::vector<std::string> strings = file->readFileLineByLine();
     
     for(int i = 0; i < strings.size(); i++) {
         if(strings[i].size() > 0) {
@@ -204,7 +204,7 @@ std::vector<hg::HGList> hg::getHGListsFromFile(hg::File file) {
     }
     
     return lists;
-}*/
+}
 
 std::vector<hg::HGList> hg::getHGListsFromFileName(std::string fileName) {
     std::vector<hg::HGList> lists;

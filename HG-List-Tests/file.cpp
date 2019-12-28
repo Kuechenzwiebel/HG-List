@@ -17,6 +17,11 @@ fileName(fileName) {
     }
 }
 
+hg::File::File(const File &other) {
+    fileName = other.fileName;
+    fileStream = std::fstream(fileName);
+}
+
 hg::File::~File() {
     fileStream.close();
 }

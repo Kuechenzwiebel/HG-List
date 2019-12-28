@@ -59,5 +59,9 @@ int main(int argc, const char * argv[]) {
     
     cout << hg::transformLinesToString(&lines) << endl;
     
+    hg::File nf(f);
+    
+    cout << nf.readFile();
+    
     return 0;
 }

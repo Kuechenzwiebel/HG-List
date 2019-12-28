@@ -20,7 +20,7 @@ namespace hg {
     class File {
     public:
         File(std::string fileName);
-        
+        File(const File &other);
         ~File();
         
         std::vector<std::string> readFileLineByLine();

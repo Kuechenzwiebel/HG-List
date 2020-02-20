@@ -28,10 +28,10 @@ namespace hg {
     
     class HGList {
     public:
-        HGList(std::string line);
+        HGList(const std::string &line);
         
         std::string getLine();
-        void setLine(std::string s);
+        void setLine(const std::string &s);
         
         hg::ListTypes getType();
         std::string getVarName();
@@ -43,11 +43,11 @@ namespace hg {
         
         
         void setType(hg::ListTypes type);
-        void setVarName(std::string name);
+        void setVarName(const std::string &name);
         
         void setIntValue(int v);
         void setDoubleValue(double v);
-        void setStringValue(std::string v);
+        void setStringValue(const std::string &v);
         void setBoolValue(bool v);
         
     private:

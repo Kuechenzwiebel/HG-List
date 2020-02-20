@@ -8,7 +8,7 @@
 
 #include "HG-List.hpp"
 
-hg::HGList::HGList(std::string line):
+hg::HGList::HGList(const std::string &line):
 line(line) {
     
 }
@@ -17,7 +17,7 @@ std::string hg::HGList::getLine() {
     return line;
 }
 
-void hg::HGList::setLine(std::string s) {
+void hg::HGList::setLine(const std::string &s) {
     line = s;
 }
 
@@ -148,7 +148,7 @@ void hg::HGList::setType(hg::ListTypes type) {
     }
 }
 
-void hg::HGList::setVarName(std::string name) {
+void hg::HGList::setVarName(const std::string &name) {
     line = hg::substr(line, 0, 2) + "[" + name + "]" + hg::substr(line, (unsigned int)line.find("{") - 1, (unsigned int)line.size() - 1);
 }
 
@@ -160,7 +160,7 @@ void hg::HGList::setDoubleValue(double v) {
     line = hg::substr(line, 0, (unsigned int)line.find("{") + 1) + std::to_string(v) + "}";
 }
 
-void hg::HGList::setStringValue(std::string v) {
+void hg::HGList::setStringValue(const std::string &v) {
     line = hg::substr(line, 0, (unsigned int)line.find("{") + 1) + v + "}";
 }
 

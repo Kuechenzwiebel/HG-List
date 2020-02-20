@@ -54,14 +54,5 @@ int main(int argc, const char * argv[]) {
     
     cout << endl << endl;
     
-    vector<string> lines;
-    lines = f.readFileLineByLine();
-    
-    cout << hg::transformLinesToString(&lines) << endl;
-    
-    hg::File nf(f);
-    
-    cout << nf.readFile();
-    
     return 0;
 }

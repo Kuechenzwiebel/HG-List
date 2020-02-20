@@ -58,7 +58,7 @@ std::string hg::File::readFile() {
     return str;
 }
 
-void hg::File::writeFile(std::string content) {
+void hg::File::writeFile(const std::string &content) {
     fileStream.open(fileName, std::ofstream::out);
     fileStream << content;
     fileStream.close();
@@ -75,7 +75,7 @@ std::string hg::transformLinesToString(std::vector<std::string> *lines) {
     return s;
 }
 
-std::string hg::substr(std::string string, unsigned int start, unsigned int end) {
+std::string hg::substr(const std::string &string, unsigned int start, unsigned int end) {
     std::string s;
     for(int i = start; i < end; i++) {
         s.push_back(string[i]);
@@ -83,7 +83,7 @@ std::string hg::substr(std::string string, unsigned int start, unsigned int end)
     return s;
 }
 
-bool hg::find(std::string string, std::string search) {
+bool hg::find(const std::string &string, const std::string &search) {
     if(string.find(search) > 0 && string.find(search) < string.length()) {
         return true;
     }

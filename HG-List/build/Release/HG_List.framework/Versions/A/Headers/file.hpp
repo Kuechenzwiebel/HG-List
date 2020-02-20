@@ -26,15 +26,15 @@ namespace hg {
         std::vector<std::string> readFileLineByLine();
         std::string readFile();
         
-        void writeFile(std::string content);
+        void writeFile(const std::string &content);
         
     private:
         std::string fileName;
         std::fstream fileStream;
     };
     
-    std::string substr(std::string string, unsigned int start, unsigned int end);
-    bool find(std::string string, std::string search);
+    std::string substr(const std::string &string, unsigned int start, unsigned int end);
+    bool find(const std::string &string, const std::string &search);
     
     std::string transformLinesToString(std::vector<std::string> *lines);
 }

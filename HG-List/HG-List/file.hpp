@@ -15,6 +15,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <memory>
 
 namespace hg {
     class File {
@@ -23,10 +24,12 @@ namespace hg {
         File(const File &other);
         ~File();
         
-        std::vector<std::string> readFileLineByLine();
+        std::vector<std::unique_ptr<std::string>> readFileLineByLine();
         std::string readFile();
         
         void writeFile(const std::string &content);
+        
+        std::string getFileName();
         
     private:
         std::string fileName;
@@ -36,7 +39,7 @@ namespace hg {
     std::string substr(const std::string &string, unsigned int start, unsigned int end);
     bool find(const std::string &string, const std::string &search);
     
-    std::string transformLinesToString(std::vector<std::string> *lines);
+    std::string transformLinesToString(std::vector<std::unique_ptr<std::string>> *lines);
 }
 
 #endif /* File_hpp */

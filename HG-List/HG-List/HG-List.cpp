@@ -191,14 +191,14 @@ bool hg::lineValidForHGList(std::string line) {
 }
 
 
-std::vector<hg::HGList> hg::getHGListsFromFile(hg::File *file) {
-    std::vector<hg::HGList> lists;
-    std::vector<std::string> strings = file->readFileLineByLine();
+std::vector<std::unique_ptr<hg::HGList>> hg::getHGListsFromFile(hg::File *file) {
+    std::vector<std::unique_ptr<hg::HGList>> lists;
+    std::vector<std::unique_ptr<std::string>> strings = file->readFileLineByLine();
     
     for(int i = 0; i < strings.size(); i++) {
-        if(strings[i].size() > 0) {
-            if(hg::lineValidForHGList(strings[i])) {
-                lists.push_back(hg::HGList(strings[i]));
+        if(strings[i]->size() > 0) {
+            if(hg::lineValidForHGList(*strings[i])) {
+                lists.emplace_back(std::make_unique<hg::HGList>(*strings[i]));
             }
         }
     }
@@ -206,8 +206,8 @@ std::vector<hg::HGList> hg::getHGListsFromFile(hg::File *file) {
     return lists;
 }
 
-std::vector<hg::HGList> hg::getHGListsFromFileName(std::string fileName) {
-    std::vector<hg::HGList> lists;
+std::vector<std::unique_ptr<hg::HGList>> hg::getHGListsFromFileName(std::string fileName) {
+    std::vector<std::unique_ptr<hg::HGList>> lists;
     std::ifstream in(fileName.c_str());
     
     if(!in) {
@@ -218,7 +218,7 @@ std::vector<hg::HGList> hg::getHGListsFromFileName(std::string fileName) {
     while (std::getline(in, str)) {
         if(str.size() > 0) {
             if(hg::lineValidForHGList(str)) {
-                lists.push_back(hg::HGList(str));
+                lists.emplace_back(std::make_unique<hg::HGList>(str));
             }
         }
     }
@@ -227,9 +227,9 @@ std::vector<hg::HGList> hg::getHGListsFromFileName(std::string fileName) {
     return lists;
 }
 
-int hg::getLocationFromName(std::vector<hg::HGList> *search, std::string varName) {
+int hg::getLocationFromName(std::vector<std::unique_ptr<hg::HGList>> *search, std::string varName) {
     for(int i = 0; i < search->size(); i++) {
-        if((*search)[i].getVarName() == varName) {
+        if((*search)[i]->getVarName() == varName) {
             return i;
         }
     }

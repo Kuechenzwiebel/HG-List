@@ -10,11 +10,7 @@
 
 hg::File::File(std::string fileName):
 fileName(fileName) {
-    fileStream = std::fstream(fileName);
     
-    if(!fileStream) {
-        std::cerr << "Cant open the file: " << fileName << std::endl;
-    }
 }
 
 hg::File::File(const File &other) {
@@ -26,15 +22,19 @@ hg::File::~File() {
     fileStream.close();
 }
 
-std::vector<std::string> hg::File::readFileLineByLine() {
+std::string hg::File::getFileName() {
+    return fileName;
+}
+
+std::vector<std::unique_ptr<std::string>> hg::File::readFileLineByLine() {
     std::string content = readFile();
-    std::vector<std::string> vec;
+    std::vector<std::unique_ptr<std::string>> vec;
     
     int lastLine = 0;
     
     for(int i = 0; i < content.size(); i++) {
         if(content[i] == '\n') {
-            vec.push_back(hg::substr(content, lastLine, i));
+            vec.emplace_back(std::make_unique<std::string>(hg::substr(content, lastLine, i)));
             lastLine = i + 1;
         }
     }
@@ -43,19 +43,12 @@ std::vector<std::string> hg::File::readFileLineByLine() {
 
 std::string hg::File::readFile() {
     fileStream.open(fileName, std::ifstream::in);
-    std::string str;
+    std::stringstream str;
     
-    try {
-        std::stringstream contentStream;
-        
-        contentStream << fileStream.rdbuf();
-        str = contentStream.str();
-    }
-    catch (std::ifstream::failure e) {
-        printf("File could not be read!\n");
-    }
+    str << fileStream.rdbuf();
+    
     fileStream.close();
-    return str;
+    return str.str();
 }
 
 void hg::File::writeFile(const std::string &content) {
@@ -65,11 +58,11 @@ void hg::File::writeFile(const std::string &content) {
 }
 
 
-std::string hg::transformLinesToString(std::vector<std::string> *lines) {
+std::string hg::transformLinesToString(std::vector<std::unique_ptr<std::string>> *lines) {
     std::string s;
     
     for(int i = 0; i < lines->size(); i++) {
-        s += (*lines)[i] + "\n";
+        s += *(*lines)[i] + "\n";
     }
     
     return s;

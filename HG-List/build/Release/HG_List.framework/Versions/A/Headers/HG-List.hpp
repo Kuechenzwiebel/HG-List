@@ -57,9 +57,9 @@ namespace hg {
     
     bool lineValidForHGList(std::string line);
     
-    std::vector<HGList> getHGListsFromFile(hg::File *file);
-    std::vector<HGList> getHGListsFromFileName(std::string fileName);
-    int getLocationFromName(std::vector<HGList> *search, std::string varName);
+    std::vector<std::unique_ptr<HGList>> getHGListsFromFile(hg::File *file);
+    std::vector<std::unique_ptr<HGList>> getHGListsFromFileName(std::string fileName);
+    int getLocationFromName(std::vector<std::unique_ptr<HGList>> *search, std::string varName);
 }
 
 #endif /* HG_List_hpp */
